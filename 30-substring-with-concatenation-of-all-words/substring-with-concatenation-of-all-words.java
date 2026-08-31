@@ -1,40 +1,41 @@
 class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
 
-        List <Integer> ans = new ArrayList<>();
+        int n = s.length();
 
-        int wordLen = words[0].length();
-        int wordCount = words.length;
+        int wordsLen = words[0].length();
+        int wordsCount = words.length;
 
-        int totalCount = wordLen * wordCount;
-        
+        int totalLength = wordsLen * wordsCount;
+
         HashMap <String , Integer> required = new HashMap<>();
 
-        for (int i = 0 ; i < words.length ; i++) {
+        List <Integer> ans = new ArrayList<>();
 
-            required.put(words[i] , required.getOrDefault(words[i] , 0) + 1);
-
+        for (String word : words) {
+            required.put(word , required.getOrDefault(word , 0) + 1);
         }
 
-        for (int start = 0 ; start <= s.length() - totalCount ; start++) {
+        for (int start = 0 ; start <= n - totalLength ; start++) {
 
             HashMap <String , Integer> current = new HashMap<>();
- 
-            for (int j = 0 ; j < wordCount ; j++) {
 
-                int index = start + j * wordLen;
+            for (int j = 0 ; j < wordsCount ; j++) {
 
-                String word = s.substring(index, index + wordLen);
+                int idx = start + j * wordsLen;
 
-                current.put(word , current.getOrDefault(word , 0) + 1);
+                String curr = s.substring(idx , idx + wordsLen);
+
+                current.put (curr , current.getOrDefault(curr , 0) + 1);
             }
 
-            if (current.equals(required)){
-                ans.add(start);
+            if (current.equals(required)) {
+                ans.add (start);
             }
+
         }
+        
 
         return ans;
-        
     }
 }
