@@ -1,55 +1,60 @@
 class Solution {
     public int longestPalindrome(String[] words) {
-        
-        HashMap<String, Integer> mp = new HashMap<>();
 
-        for (String word : words) {
-            mp.put(word, mp.getOrDefault(word, 0) + 1);
+        int n = words.length;
+
+        HashMap <String , Integer> mp = new HashMap<>();
+
+        for (int i = 0 ; i < n ; i++) {
+            mp.put (words[i] , mp.getOrDefault(words[i] , 0) + 1);
         }
 
         int len = 0;
-        boolean flag = false;
+        boolean flag = true;
 
-        for (int i = 0; i < words.length; i++) {
+        // similar
+        for (int i = 0 ; i < n ; i++) {
 
             if (!mp.containsKey(words[i])) continue;
 
-            if (words[i].charAt(0) != words[i].charAt(1)) {
+            if (words[i].charAt(1) != words[i].charAt(0)) {
 
-                String s = "" + words[i].charAt(1) + words[i].charAt(0);
+                String s = "";
+                s += words[i].charAt(1);
+                s += words[i].charAt(0);
 
                 if (mp.containsKey(s)) {
-
                     int pairs = Math.min(mp.get(s), mp.get(words[i]));
                     len += pairs * 4;
 
-                    mp.remove(s);
-                    mp.remove(words[i]);
                 }
+                mp.remove(words[i]);
+                mp.remove(s);
 
-            } 
-            else {
+            }else {
 
-                int c = mp.get(words[i]);
+                int cnt = mp.get(words[i]);
 
-                if (c % 2 == 0) {
-                    len += c * 2;
-                } 
+                if (cnt % 2 == 0) {
+                    len += cnt * 2;
+                }
                 else {
-
-                    if (!flag) {
-                        len += c * 2;
-                        flag = true;
-                    } 
-                    else {
-                        len += (c - 1) * 2;
+                    if (flag == true){
+                        len += cnt * 2;
+                        flag = false;
+                    }else {
+                        len += (cnt - 1) * 2;
                     }
                 }
 
                 mp.remove(words[i]);
             }
+
         }
 
+
         return len;
+
+        
     }
 }
