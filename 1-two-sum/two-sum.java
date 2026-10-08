@@ -5,45 +5,44 @@ class Solution {
         int val;
 
         public Pair (int idx , int val) {
+
             this.idx = idx;
             this.val = val;
+
         }
 
-    }
+        
 
+    }
     public int[] twoSum(int[] nums, int target) {
 
         int n = nums.length;
-        Pair[] pairs = new Pair[n];
+
+        Pair[] pair = new Pair[n];
         for (int i = 0 ; i < n ; i++) {
-            pairs[i] = new Pair(i , nums[i]);
+            pair[i] = new Pair(i , nums[i]);
         }
 
-        Arrays.sort(pairs , (a , b) -> a.val - b.val);
+        Arrays.sort(pair , (a,b) -> a.val - b.val);
 
+        int i = 0;
+        int j = n-1;
 
-        int l = 0;
-        int r = n-1;
-
-        while (l < r) {
-            int sum = pairs[l].val + pairs[r].val;
+        while (i < j) {
+            int sum = pair[i].val + pair[j].val;
 
             if (sum == target) {
                 return new int[] {
-                    pairs[l].idx,
-                    pairs[r].idx
+                    pair[i].idx,
+                    pair[j].idx
                 };
-            }
-            else if (sum < target) {
-                l++;
+            }else if (sum < target) {
+                i++;
             }else {
-                r--;
+                j--;
             }
         }
-
-
-
-        return new int[] {-1 , -1};
-
+        
+        return new int[]{-1 , -1};
     }
 }
